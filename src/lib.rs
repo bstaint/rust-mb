@@ -1,6 +1,6 @@
-mod mb;
+pub mod mb;
 
-mod interface;
+pub mod interface;
 
 use interface::Type::*;
 use mb::MB;
