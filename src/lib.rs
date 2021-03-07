@@ -1,9 +1,8 @@
-mod mb;
+pub mod mb;
 
 mod interface;
 
 use interface::Type::*;
-use mb::MB;
 
 #[cfg(test)]
 mod tests {
@@ -11,9 +10,9 @@ mod tests {
   use super::*;
   #[test]
   fn CreateWebWindow() {
-    let mut mb = MB::new();
     MB::Initialize();
     MB::EnableHighDPISupport();
+
     let window = Window {
       style: 0,
       parent: 0,
@@ -22,11 +21,13 @@ mod tests {
       width: 450,
       height: 350,
     };
-    mb.CreateWebWindow(window);
-    mb.SetWindowTitle("窗口程序");
-    mb.MoveToCenter();
-    mb.loadUrl("http://www.baidu.com/");
-    mb.ShowWindow();
+
+    let mut mb = MB::new()
+      .CreateWebWindow(window)
+      .SetWindowTitle("窗口程序")
+      .MoveToCenter()
+      .loadUrl("http://www.baidu.com/")
+      .ShowWindow();
 
     MB::RunMessageLoop();
   }

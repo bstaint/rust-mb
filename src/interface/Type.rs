@@ -13,3 +13,9 @@ pub type jsValue = isize;
 pub type HWND = isize;
 pub type WPARAM = isize;
 pub type LPARAM = isize;
+
+#[derive(Debug)]
+pub struct MB {
+    pub webview: Webview,
+    pub url: String,
+}

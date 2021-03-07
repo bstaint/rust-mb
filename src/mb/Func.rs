@@ -1,5 +1,5 @@
 use super::util::*;
-use super::MB;
+
 use crate::interface::Func::*;
 use crate::interface::Type::*;
 use lazy_static::lazy_static;
@@ -7,7 +7,8 @@ use libloading::{Library, Symbol};
 use std::ffi::{CStr, CString};
 
 lazy_static! {
-    static ref nodeDll: Library = unsafe { Library::new("./node.dll").unwrap() };
+    static ref nodeDll: Library =
+        unsafe { Library::new("./node.dll").expect("找不到node.dll！") };
 }
 
 impl MB {
@@ -26,7 +27,7 @@ impl MB {
     }
 
     /**创建一个窗口 */
-    pub fn CreateWebWindow(&mut self, window: Window) {
+    pub fn CreateWebWindow(&mut self, window: Window) -> &mut MB {
         let lib = &nodeDll;
         let wkeCreateWebWindow: Symbol<CreateWebWindow> =
             unsafe { lib.get(b"wkeCreateWebWindow").unwrap() };
@@ -39,21 +40,24 @@ impl MB {
             window.height,
         );
         self.webview = webview;
+        self
     }
 
     /**显示窗口 */
-    pub fn ShowWindow(&mut self) {
+    pub fn ShowWindow(&mut self) -> &mut MB {
         let lib = &nodeDll;
         let wkeShowWindow: Symbol<ShowWindow> = unsafe { lib.get(b"wkeShowWindow").unwrap() };
 
         wkeShowWindow(self.webview, true);
+        self
     }
 
     /**窗口居中 */
-    pub fn MoveToCenter(&self) {
+    pub fn MoveToCenter(&mut self) -> &mut MB {
         let lib = &nodeDll;
         let wkeMoveToCenter: Symbol<MoveToCenter> = unsafe { lib.get(b"wkeMoveToCenter").unwrap() };
         wkeMoveToCenter(self.webview);
+        self
     }
 
     /**开启高dpi支持 */
@@ -73,31 +77,34 @@ impl MB {
     }
 
     /**设置窗口标题 */
-    pub fn SetWindowTitle(&self, title: &str) {
+    pub fn SetWindowTitle(&mut self, title: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeSetWindowTitle: Symbol<SetWindowTitle> =
             unsafe { lib.get(b"wkeSetWindowTitle").unwrap() };
         let c_title = unsafe { rustToCStr(title) };
         wkeSetWindowTitle(self.webview, c_title);
+        self
     }
 
     /**加载URL */
-    pub fn loadUrl(&mut self, url: &str) {
+    pub fn loadUrl(&mut self, url: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeLoadURL: Symbol<LoadUrl> = unsafe { lib.get(b"wkeLoadURL").unwrap() };
         self.url = String::from(url);
 
         let c_url = unsafe { rustToCStr(url) };
         wkeLoadURL(self.webview, c_url);
+        self
     }
 
     /**窗体销毁回调 */
-    pub fn OnWindowDestroy(&self, callback: fn()) {
+    pub fn OnWindowDestroy(&mut self, callback: fn()) -> &mut MB {
         let lib = &nodeDll;
         let wkeOnWindowDestroy: Symbol<OnWindowDestroy> =
             unsafe { lib.get(b"wkeOnWindowDestroy").unwrap() };
 
         wkeOnWindowDestroy(self.webview, callback);
+        self
     }
 
     /**JS绑定方法 */
