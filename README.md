@@ -10,6 +10,7 @@ mb的rust封装，写的很烂。
 #### 安装教程
 
 1.  把下列代码复制到Cargo.toml
+
     miniblink = {git = "https://gitee.com/jojonb/rust-mb"}
 
 #### 使用说明
