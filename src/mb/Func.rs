@@ -125,7 +125,7 @@ impl MB {
     }
 
     /**转换成String  */
-    pub fn jsToString(es: jsExecState, value: jsValue) -> &'static str {
+    pub fn jsToString<'a>(es: jsExecState, value: jsValue) -> &'a str {
         let lib = &nodeDll;
         let jsToString: Symbol<jsToString> = unsafe { lib.get(b"jsToString").unwrap() };
 
