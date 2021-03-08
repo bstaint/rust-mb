@@ -13,11 +13,9 @@ mb的rust封装，写的很烂。
 
     miniblink = {git = "https://gitee.com/jojonb/rust-mb"}
 
-#### 使用说明
+#### 效果
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+![](demo.png)
 
 #### 参与贡献
 
