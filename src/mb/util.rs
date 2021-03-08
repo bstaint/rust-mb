@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+
 use std::ffi::{CStr, CString};
 
 pub fn rustToCStr(str: &str) -> *mut i8 {

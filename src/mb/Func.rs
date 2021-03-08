@@ -1,10 +1,11 @@
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
 use super::util::*;
 
 use crate::interface::Func::*;
 use crate::interface::Type::*;
 use lazy_static::lazy_static;
 use libloading::{Library, Symbol};
-use std::ffi::{CStr, CString};
 
 lazy_static! {
     static ref nodeDll: Library =
@@ -81,7 +82,7 @@ impl MB {
         let lib = &nodeDll;
         let wkeSetWindowTitle: Symbol<SetWindowTitle> =
             unsafe { lib.get(b"wkeSetWindowTitle").unwrap() };
-        let c_title = unsafe { rustToCStr(title) };
+        let c_title = rustToCStr(title);
         wkeSetWindowTitle(self.webview, c_title);
         self
     }
@@ -92,7 +93,7 @@ impl MB {
         let wkeLoadURL: Symbol<LoadUrl> = unsafe { lib.get(b"wkeLoadURL").unwrap() };
         self.url = String::from(url);
 
-        let c_url = unsafe { rustToCStr(url) };
+        let c_url = rustToCStr(url);
         wkeLoadURL(self.webview, c_url);
         self
     }
@@ -112,7 +113,7 @@ impl MB {
         let lib = &nodeDll;
         let wkeJsBindFunction: Symbol<JsBindFunction> =
             unsafe { lib.get(b"wkeJsBindFunction").unwrap() };
-        let c_msg = unsafe { CString::new(msg).unwrap().into_raw() };
+        let c_msg = rustToCStr(msg);
         wkeJsBindFunction(c_msg, callback, args);
     }
 

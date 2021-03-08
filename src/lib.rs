@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
 pub mod mb;
 
 pub mod interface;
@@ -25,10 +27,11 @@ mod tests {
 
     let mut mb = MB::new();
     mb.CreateWebWindow(window)
-      .SetWindowTitle("窗口程序")
-      .MoveToCenter()
+      .SetWindowTitle("窗口")
       .loadUrl("http://127.0.0.1:8080/")
+      .MoveToCenter()
       .ShowWindow();
+    
 
     // mb.RunJS("alert('hello world')");
 

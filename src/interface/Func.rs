@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use super::Type::*;
 
 pub type Initialize = fn();
