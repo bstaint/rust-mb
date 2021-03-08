@@ -8,7 +8,7 @@ use std::ffi::{CStr, CString};
 
 lazy_static! {
     static ref nodeDll: Library =
-        unsafe { Library::new("./node.dll").expect("找不到node.dll！") };
+        unsafe { Library::new("./node.dll").expect("引用node.dll出错！") };
 }
 
 impl MB {
@@ -108,7 +108,7 @@ impl MB {
     }
 
     /**JS绑定方法 */
-    pub fn JsBindFunction(msg: &str, callback: fn(es: jsExecState), args: i32) {
+    pub fn JsBindFunction(msg: &str, callback: fn(es: jsExecState) -> jsValue, args: i32) {
         let lib = &nodeDll;
         let wkeJsBindFunction: Symbol<JsBindFunction> =
             unsafe { lib.get(b"wkeJsBindFunction").unwrap() };
@@ -116,7 +116,16 @@ impl MB {
         wkeJsBindFunction(c_msg, callback, args);
     }
 
-    /**获取回调参数 */
+    /**执行JS */
+    pub fn RunJS(&mut self, script: &str) -> jsValue {
+        let lib = &nodeDll;
+        let wkeRunJS: Symbol<RunJS> = unsafe { lib.get(b"wkeRunJS").unwrap() };
+
+        let script = rustToCStr(script);
+        wkeRunJS(self.webview, script)
+    }
+
+    /**获取传入参数 */
     pub fn jsArg(es: jsExecState, agrId: i32) -> jsValue {
         let lib = &nodeDll;
         let jsArg: Symbol<jsArg> = unsafe { lib.get(b"jsArg").unwrap() };
@@ -131,13 +140,14 @@ impl MB {
 
         let msg = jsToString(es, value);
 
-        unsafe { cToRustStr(msg) }
+        cToRustStr(msg)
     }
 
-    pub fn jsString(es: jsExecState, str: *const u8) -> String {
+    pub fn jsString(es: jsExecState, str: &str) -> jsValue {
         let lib = &nodeDll;
         let jsString: Symbol<jsString> = unsafe { lib.get(b"jsString").unwrap() };
 
+        let str = rustToCStr(str);
         jsString(es, str)
     }
 

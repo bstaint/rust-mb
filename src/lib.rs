@@ -21,14 +21,26 @@ mod tests {
       width: 450,
       height: 350,
     };
+    MB::JsBindFunction("sendData", getJSdata, 0);
 
-    let mut mb = MB::new()
-      .CreateWebWindow(window)
+    let mut mb = MB::new();
+    mb.CreateWebWindow(window)
       .SetWindowTitle("窗口程序")
       .MoveToCenter()
-      .loadUrl("http://www.baidu.com/")
+      .loadUrl("http://127.0.0.1:8080/")
       .ShowWindow();
 
+    // mb.RunJS("alert('hello world')");
+
     MB::RunMessageLoop();
+  }
+
+  fn getJSdata(es: jsExecState) -> jsValue {
+    let jsArg = MB::jsArg(es, 0);
+    let value = MB::jsToString(es, jsArg);
+
+    println!("{}", value);
+    let result = format!("你传入的值为{}，我是rust返回的值", value);
+    return MB::jsString(es, &result);
   }
 }
