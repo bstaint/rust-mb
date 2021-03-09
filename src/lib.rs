@@ -1,49 +1,57 @@
 #![allow(non_snake_case)]
 #![allow(unused_imports)]
+
 pub mod mb;
 
 pub mod interface;
 
-use interface::Type::*;
-
 #[cfg(test)]
 mod tests {
 
-  use super::*;
-  #[test]
-  fn CreateWebWindow() {
-    MB::Initialize();
-    MB::EnableHighDPISupport();
+    use super::*;
+    use lazy_static::lazy_static;
+    use std::sync::Mutex;
+    use interface::Type::*;
 
-    let window = Window {
-      style: 0,
-      parent: 0,
-      x: 0,
-      y: 0,
-      width: 450,
-      height: 350,
-    };
-    MB::JsBindFunction("sendData", getJSdata, 0);
+    lazy_static! {
+        static ref mb: Mutex<MB> = Mutex::new(MB::new());
+    }
+    #[test]
+    fn CreateWebWindow() {
+        MB::Initialize();
+        MB::EnableHighDPISupport();
 
-    let mut mb = MB::new();
-    mb.CreateWebWindow(window)
-      .SetWindowTitle("窗口")
-      .loadUrl("http://127.0.0.1:8080/")
-      .MoveToCenter()
-      .ShowWindow();
-    
+        let window = Window {
+            style: 0,
+            parent: 0,
+            x: 0,
+            y: 0,
+            width: 450,
+            height: 350,
+        };
+        MB::JsBindFunction("sendData", getJSdata, 0);
+        {
+            let mut _mb = mb.lock().unwrap();
+            _mb.CreateWebWindow(window)
+                .SetWindowTitle("窗口")
+                .loadUrl("http://127.0.0.1:8080/")
+                .MoveToCenter()
+                .ShowWindow();
+        }
 
-    // mb.RunJS("alert('hello world')");
+        // mb.RunJS("alert('hello world')");
 
-    MB::RunMessageLoop();
-  }
+        MB::RunMessageLoop();
+    }
 
-  fn getJSdata(es: jsExecState) -> jsValue {
-    let jsArg = MB::jsArg(es, 0);
-    let value = MB::jsToString(es, jsArg);
+    fn getJSdata(es: jsExecState) -> jsValue {
+        let jsArg = MB::jsArg(es, 0);
+        let value = MB::jsToString(es, jsArg);
 
-    println!("{}", value);
-    let result = format!("你传入的值为{}，我是rust返回的值", value);
-    return MB::jsString(es, &result);
-  }
+        let url = &mb.lock().unwrap().url;
+
+        println!("{}", url);
+        let result = format!("当前url为{}，我是rust返回的值", url);
+        return MB::jsString(es, &result);
+    }
 }
