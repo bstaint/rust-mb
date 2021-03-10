@@ -21,3 +21,16 @@ pub struct MB {
     pub webview: Webview,
     pub url: String,
 }
+
+impl Default for Window {
+    fn default() -> Self {
+        Window {
+            style: 0,
+            parent: 0,
+            x: 0,
+            y: 0,
+            width: 800,
+            height: 600,
+        }
+    }
+}
