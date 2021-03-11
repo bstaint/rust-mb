@@ -152,6 +152,20 @@ impl MB {
         jsString(es, str)
     }
 
+    pub fn jsEmptyObject(es: jsExecState) -> jsValue {
+        let lib = &nodeDll;
+        let jsEmptyObject: Symbol<jsEmptyObject> = unsafe { lib.get(b"jsEmptyObject").unwrap() };
+
+        jsEmptyObject(es)
+    }
+
+    pub fn jsSet(es: jsExecState, object: jsValue, prop: &str, value: jsValue) {
+        let lib = &nodeDll;
+        let jsSet: Symbol<jsSet> = unsafe { lib.get(b"jsSet").unwrap() };
+        let msg = rustToCStr(prop);
+        jsSet(es, object, msg, value);
+    }
+
     pub fn GetWindowHandle(&self) -> HWND {
         let lib = &nodeDll;
         let wkeGetWindowHandle: Symbol<GetWindowHandle> =

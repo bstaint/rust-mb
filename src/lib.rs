@@ -9,9 +9,9 @@ pub mod interface;
 mod tests {
 
     use super::*;
+    use interface::Type::*;
     use lazy_static::lazy_static;
     use std::sync::Mutex;
-    use interface::Type::*;
 
     lazy_static! {
         static ref mb: Mutex<MB> = Mutex::new(MB::new());
@@ -34,7 +34,7 @@ mod tests {
             let mut _mb = mb.lock().unwrap();
             _mb.CreateWebWindow(window)
                 .SetWindowTitle("窗口")
-                .loadUrl("http://127.0.0.1:8080/")
+                .loadUrl("http://127.0.0.1:5500/")
                 .MoveToCenter()
                 .ShowWindow();
         }
@@ -48,10 +48,8 @@ mod tests {
         let jsArg = MB::jsArg(es, 0);
         let value = MB::jsToString(es, jsArg);
 
-        let url = &mb.lock().unwrap().url;
-
-        println!("{}", url);
-        let result = format!("当前url为{}，我是rust返回的值", url);
-        return MB::jsString(es, &result);
+        let object = MB::jsEmptyObject(es);
+        MB::jsSet(es, object, "name", jsArg);
+        object
     }
 }
