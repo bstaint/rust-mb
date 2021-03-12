@@ -125,6 +125,13 @@ impl MB {
         let script = rustToCStr(script);
         wkeRunJS(self.webview, script)
     }
+    /* 打开开发者工具 */
+    pub fn ShowDevtools(&mut self, path: &str) {
+        let lib = &nodeDll;
+        let ShowDevtools: Symbol<ShowDevtools> = unsafe { lib.get(b"wkeShowDevtools").unwrap() };
+        let path = rustToCStrW(path);
+        ShowDevtools(self.webview, path as * mut u16 , 0, 0);
+    }
 
     /**获取传入参数 */
     pub fn jsArg(es: jsExecState, agrId: i32) -> jsValue {

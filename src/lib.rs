@@ -22,21 +22,18 @@ mod tests {
         MB::EnableHighDPISupport();
 
         let window = Window {
-            style: 0,
-            parent: 0,
-            x: 0,
-            y: 0,
-            width: 450,
-            height: 350,
+            width: 1330,
+            height: 860,
+            ..Default::default()
         };
-        MB::JsBindFunction("sendData", getJSdata, 0);
         {
             let mut _mb = mb.lock().unwrap();
             _mb.CreateWebWindow(window)
-                .SetWindowTitle("窗口")
-                .loadUrl("http://127.0.0.1:5500/")
+                .SetWindowTitle("PostWoman")
+                .loadUrl("http://127.0.0.1:8080/cn/")
                 .MoveToCenter()
-                .ShowWindow();
+                .ShowWindow()
+                .ShowDevtools(r#"file:///D:\documents\1152207863\FileRecv\miniblink-20210131 (4)\front_end\inspector.html"#);
         }
 
         // mb.RunJS("alert('hello world')");
