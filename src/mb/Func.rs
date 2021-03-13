@@ -133,6 +133,16 @@ impl MB {
         ShowDevtools(self.webview, path as * mut u16 , 0, 0);
     }
 
+    /* 打开开发者工具 */
+    pub fn GetSource<'a>(&mut self) ->&'a str{
+        let lib = &nodeDll;
+        let wkeGetSource: Symbol<GetSource> = unsafe { lib.get(b"wkeGetSource").unwrap() };
+    
+       let source= wkeGetSource(self.webview);
+       cToRustStr(source)
+    }
+
+
     /**获取传入参数 */
     pub fn jsArg(es: jsExecState, agrId: i32) -> jsValue {
         let lib = &nodeDll;
