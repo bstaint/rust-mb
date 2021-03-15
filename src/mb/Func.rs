@@ -151,10 +151,21 @@ impl MB {
         GetWebViewForCurrentContext()
     }
 
+    /** 获取当前的url */
+    pub fn GetURL<'a>(&mut self) -> &'a str {
+        let lib = &nodeDll;
+        let wkeGetURL: Symbol<GetURL> = unsafe { lib.get(b"wkeGetURL").unwrap() };
+
+        let url = wkeGetURL(self.webview);
+        cToRustStr(url)
+    }
+
+    /** 获取当前的MB */
     pub fn GetCurrentMB() -> MB {
+        let webview = MB::GetWebViewForCurrentContext();
         MB {
-            webview: MB::GetWebViewForCurrentContext(),
-            url: String::new()
+            webview: webview,
+            url: String::new(),
         }
     }
 
