@@ -18,7 +18,7 @@ pub type FireWindowsMessage =
     fn(webview: Webview, hWnd: HWND, message: i32, wParam: WPARAM, lParam: LPARAM) -> bool;
 
 pub type ShowDevtools = fn(webview: Webview, path: *const u16, callback: i32, param: i32);
-
+pub type GetWebViewForCurrentContext = fn() -> Webview;
 pub type GetSource = fn(webview: Webview) -> *const i8;
 
 //js

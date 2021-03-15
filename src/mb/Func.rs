@@ -125,23 +125,38 @@ impl MB {
         let script = rustToCStr(script);
         wkeRunJS(self.webview, script)
     }
-    /* 打开开发者工具 */
+    /** 打开开发者工具 */
     pub fn ShowDevtools(&mut self, path: &str) {
         let lib = &nodeDll;
         let ShowDevtools: Symbol<ShowDevtools> = unsafe { lib.get(b"wkeShowDevtools").unwrap() };
         let path = rustToCStrW(path);
-        ShowDevtools(self.webview, path as * mut u16 , 0, 0);
+        ShowDevtools(self.webview, path as *mut u16, 0, 0);
     }
 
-    /* 打开开发者工具 */
-    pub fn GetSource<'a>(&mut self) ->&'a str{
+    /** 获取网页HTML */
+    pub fn GetSource<'a>(&mut self) -> &'a str {
         let lib = &nodeDll;
         let wkeGetSource: Symbol<GetSource> = unsafe { lib.get(b"wkeGetSource").unwrap() };
-    
-       let source= wkeGetSource(self.webview);
-       cToRustStr(source)
+
+        let source = wkeGetSource(self.webview);
+        cToRustStr(source)
     }
 
+    /** 获取当前线程 Webview */
+    pub fn GetWebViewForCurrentContext<'a>() -> Webview {
+        let lib = &nodeDll;
+        let GetWebViewForCurrentContext: Symbol<GetWebViewForCurrentContext> =
+            unsafe { lib.get(b"wkeGetWebViewForCurrentContext").unwrap() };
+
+        GetWebViewForCurrentContext()
+    }
+
+    pub fn GetCurrentMB() -> MB {
+        MB {
+            webview: MB::GetWebViewForCurrentContext(),
+            url: String::new()
+        }
+    }
 
     /**获取传入参数 */
     pub fn jsArg(es: jsExecState, agrId: i32) -> jsValue {
