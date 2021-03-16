@@ -7,9 +7,18 @@ use crate::interface::Type::*;
 use lazy_static::lazy_static;
 use libloading::{Library, Symbol};
 
+use std::fs;
 lazy_static! {
-    static ref nodeDll: Library =
-        unsafe { Library::new("./node.dll").expect("引用node.dll出错！") };
+    static ref nodeDll: Library = unsafe {
+        let isExist = fs::metadata("node.dll").is_ok() || fs::metadata("./target/debug/node.dll").is_ok();
+        if isExist {
+            Library::new("./node.dll").unwrap()
+        }else{
+            eprintln!("node.dll不存在,请前往https://miniblink.net/下载");
+            std::process::exit(1);
+        }
+   
+    };
 }
 
 impl MB {
@@ -202,7 +211,7 @@ impl MB {
         jsEmptyObject(es)
     }
 
-    pub fn jsGet(es: jsExecState, object: jsValue, prop: &str)->jsValue {
+    pub fn jsGet(es: jsExecState, object: jsValue, prop: &str) -> jsValue {
         let lib = &nodeDll;
         let jsGet: Symbol<jsGet> = unsafe { lib.get(b"jsGet").unwrap() };
         let msg = rustToCStr(prop);
