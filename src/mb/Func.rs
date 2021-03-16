@@ -14,7 +14,7 @@ lazy_static! {
         if isExist {
             Library::new("./node.dll").unwrap()
         }else{
-            eprintln!("node.dll不存在,请前往https://miniblink.net/下载");
+            eprintln!("node.dll不存在,请前往 https://miniblink.net/ 下载");
             std::process::exit(1);
         }
    
