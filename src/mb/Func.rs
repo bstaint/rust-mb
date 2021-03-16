@@ -202,6 +202,13 @@ impl MB {
         jsEmptyObject(es)
     }
 
+    pub fn jsGet(es: jsExecState, object: jsValue, prop: &str)->jsValue {
+        let lib = &nodeDll;
+        let jsGet: Symbol<jsGet> = unsafe { lib.get(b"jsGet").unwrap() };
+        let msg = rustToCStr(prop);
+        jsGet(es, object, msg)
+    }
+
     pub fn jsSet(es: jsExecState, object: jsValue, prop: &str, value: jsValue) {
         let lib = &nodeDll;
         let jsSet: Symbol<jsSet> = unsafe { lib.get(b"jsSet").unwrap() };
