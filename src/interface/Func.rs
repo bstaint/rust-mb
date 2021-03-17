@@ -25,6 +25,7 @@ pub type ShowDevtools = fn(webview: Webview, path: *const u16, callback: i32, pa
 pub type GetWebViewForCurrentContext = fn() -> Webview;
 pub type GetSource = fn(webview: Webview) -> *const i8;
 pub type GetURL = fn(webview: Webview) -> *const i8;
+
 //js
 pub type jsArg = fn(es: jsExecState, argId: i32) -> jsValue;
 pub type jsToString = fn(es: jsExecState, value: jsValue) -> *const i8;
