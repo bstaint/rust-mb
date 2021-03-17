@@ -10,14 +10,13 @@ use libloading::{Library, Symbol};
 use std::fs;
 lazy_static! {
     static ref nodeDll: Library = unsafe {
-        let isExist = fs::metadata("node.dll").is_ok() || fs::metadata("./target/debug/node.dll").is_ok();
+        let isExist = fs::metadata("node.dll").is_ok();
         if isExist {
             Library::new("./node.dll").unwrap()
-        }else{
+        } else {
             eprintln!("node.dll不存在,请前往 https://miniblink.net/ 下载");
             std::process::exit(1);
         }
-   
     };
 }
 
@@ -104,6 +103,26 @@ impl MB {
 
         let c_url = rustToCStr(url);
         wkeLoadURL(self.webview, c_url);
+        self
+    }
+
+    /**加载HTML */
+    pub fn loadHTML(&mut self, html: &str) -> &mut MB {
+        let lib = &nodeDll;
+        let wkeLoadHTML: Symbol<LoadHTML> = unsafe { lib.get(b"wkeLoadHTML").unwrap() };
+
+        let html = rustToCStr(html);
+        wkeLoadHTML(self.webview, html);
+        self
+    }
+
+    /**加载HTML文件 */
+    pub fn LoadFile(&mut self, filename: &str) -> &mut MB {
+        let lib = &nodeDll;
+        let wkeLoadFile: Symbol<LoadFile> = unsafe { lib.get(b"wkeLoadFile").unwrap() };
+
+        let filename = rustToCStr(filename);
+        wkeLoadFile(self.webview, filename);
         self
     }
 
