@@ -96,18 +96,18 @@ impl MB {
     }
 
     /**加载URL */
-    pub fn loadUrl(&mut self, url: &str) -> &mut MB {
+    pub fn LoadUrl(&mut self, url: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeLoadURL: Symbol<LoadUrl> = unsafe { lib.get(b"wkeLoadURL").unwrap() };
         self.url = String::from(url);
 
-        let c_url = rustToCStr(url);
-        wkeLoadURL(self.webview, c_url);
+        let url = rustToCStr(url);
+        wkeLoadURL(self.webview, url);
         self
     }
 
     /**加载HTML */
-    pub fn loadHTML(&mut self, html: &str) -> &mut MB {
+    pub fn LoadHTML(&mut self, html: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeLoadHTML: Symbol<LoadHTML> = unsafe { lib.get(b"wkeLoadHTML").unwrap() };
 
