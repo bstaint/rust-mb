@@ -9,9 +9,21 @@ pub struct Window {
     pub height: i32,
 }
 
+pub struct Object;
+
 pub type Webview = isize;
-pub type jsExecState = isize;
-pub type jsValue = isize;
+// pub type jsExecState = isize;
+// pub type jsValue = isize;
+
+#[derive(Clone, Copy, Debug)]
+pub struct jsExecState {
+    value: isize,
+}
+#[derive(Clone, Copy, Debug)]
+pub struct jsValue {
+    value: isize,
+}
+
 pub type HWND = isize;
 pub type WPARAM = isize;
 pub type LPARAM = isize;

@@ -26,6 +26,8 @@ pub type GetWebViewForCurrentContext = fn() -> Webview;
 pub type GetSource = fn(webview: Webview) -> *const i8;
 pub type GetURL = fn(webview: Webview) -> *const i8;
 
+pub type GlobalExec = fn(webview: Webview) -> jsExecState;
+
 //js
 pub type jsArg = fn(es: jsExecState, argId: i32) -> jsValue;
 pub type jsToString = fn(es: jsExecState, value: jsValue) -> *const i8;

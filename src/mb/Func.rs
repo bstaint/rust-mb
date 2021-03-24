@@ -145,6 +145,8 @@ impl MB {
         wkeJsBindFunction(c_msg, callback, args);
     }
 
+
+
     /**执行JS */
     pub fn RunJS(&mut self, script: &str) -> jsValue {
         let lib = &nodeDll;
@@ -195,6 +197,14 @@ impl MB {
             webview: webview,
             url: String::new(),
         }
+    }
+
+    /** 获取当前的MB */
+    pub fn GlobalExec(&mut self) -> jsExecState {
+        let lib = &nodeDll;
+        let wkeGlobalExec: Symbol<GlobalExec> = unsafe { lib.get(b"wkeGlobalExec").unwrap() };
+
+        wkeGlobalExec(self.webview)
     }
 
     /**获取传入参数 */
