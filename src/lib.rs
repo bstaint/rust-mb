@@ -9,8 +9,8 @@ pub mod interface;
 mod tests {
 
     use super::*;
-    use interface::Type::*;
 
+    use interface::Type::*;
 
     #[test]
     fn CreateWebWindow() {
@@ -18,29 +18,21 @@ mod tests {
         MB::EnableHighDPISupport();
         MB::JsBindFunction("sendData", getJSdata, 0);
 
-        let window = Window {
-
-            ..Default::default()
-        };
-
         let mut mb = MB::new();
-        mb.CreateWebWindow(window)
+        mb.CreateWebWindow(Window::default())
             .LoadFile("./index.html")
             .MoveToCenter()
             .ShowWindow();
 
-        // mb.RunJS("alert('hello world')");
-
         MB::RunMessageLoop();
     }
-   
+
     fn getJSdata(es: jsExecState) -> jsValue {
-        let jsArg = MB::jsArg(es, 0);
-       
+        let jsArg = es.getArg(0);
 
+        let jsobj = MB::jsEmptyObject(es);
+        jsobj.setProp(es, "name", jsArg);
 
-        let object = MB::jsEmptyObject(es);
-        MB::jsSet(es, object, "name", jsArg);
-        object
+        jsobj
     }
 }
