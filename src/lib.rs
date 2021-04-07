@@ -8,9 +8,11 @@ pub mod interface;
 #[cfg(test)]
 mod tests {
 
+
     use super::*;
 
     use interface::Type::*;
+
 
     #[test]
     fn CreateWebWindow() {

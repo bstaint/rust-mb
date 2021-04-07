@@ -1,6 +1,6 @@
 #![allow(non_camel_case_types)]
 #[warn(unused_parens)]
-use super::Type::*;
+use crate::interface::Type::*;
 
 impl jsValue {
        

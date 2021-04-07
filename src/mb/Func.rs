@@ -126,6 +126,27 @@ impl MB {
         self
     }
 
+    
+    /**dom加载完成回调 */
+    pub fn OnDocumentReady(&mut self, callback: fn()) -> &mut MB {
+        let lib = &nodeDll;
+        let wkeOnDocumentReady: Symbol<OnDocumentReady> =
+            unsafe { lib.get(b"wkeOnDocumentReady").unwrap() };
+
+            wkeOnDocumentReady(self.webview, callback);
+        self
+    }
+    
+    /**网页加载完成回调 */
+    pub fn OnLoadingFinish(&mut self, callback: fn()) -> &mut MB {
+        let lib = &nodeDll;
+        let wkeOnLoadingFinish: Symbol<OnLoadingFinish> =
+            unsafe { lib.get(b"wkeOnLoadingFinish").unwrap() };
+
+            wkeOnLoadingFinish(self.webview, callback);
+        self
+    }
+
     /**窗体销毁回调 */
     pub fn OnWindowDestroy(&mut self, callback: fn()) -> &mut MB {
         let lib = &nodeDll;

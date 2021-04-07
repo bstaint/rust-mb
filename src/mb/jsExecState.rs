@@ -1,6 +1,6 @@
 #![allow(non_camel_case_types)]
 
-use super::Type::*;
+use crate::interface::Type::*;
 
 impl jsExecState {
     pub fn getArg(self, argId: i32) -> jsValue {

@@ -14,7 +14,11 @@ pub type LoadUrl = fn(Webview, *mut i8);
 pub type LoadHTML = fn(Webview, *mut i8);
 pub type LoadFile = fn(Webview, *mut i8);
 
+
+pub type OnDocumentReady=fn(Webview, fn());
+pub type OnLoadingFinish = fn(Webview, fn());
 pub type OnWindowDestroy = fn(Webview, fn());
+
 pub type JsBindFunction = fn(*mut i8, fn(es: jsExecState) -> jsValue, i32);
 pub type RunJS = fn(Webview, *const i8) -> jsValue;
 pub type GetWindowHandle = fn(webview: Webview) -> HWND;
