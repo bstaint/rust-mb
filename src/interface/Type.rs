@@ -21,10 +21,6 @@ pub struct jsValue {
     value: isize,
 }
 
-pub type HWND = isize;
-pub type WPARAM = isize;
-pub type LPARAM = isize;
-
 #[derive(Debug)]
 pub struct MB {
     pub webview: Webview,

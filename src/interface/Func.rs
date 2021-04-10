@@ -1,5 +1,10 @@
 #![allow(non_camel_case_types)]
 
+use winapi::shared::{
+    minwindef::{LPARAM, WPARAM},
+    windef::HWND,
+};
+
 use super::Type::*;
 
 pub type Initialize = fn();
@@ -14,10 +19,14 @@ pub type LoadUrl = fn(Webview, *mut i8);
 pub type LoadHTML = fn(Webview, *mut i8);
 pub type LoadFile = fn(Webview, *mut i8);
 
-
-pub type OnDocumentReady=fn(Webview, fn());
+pub type OnDocumentReady = fn(Webview, fn());
 pub type OnLoadingFinish = fn(Webview, fn());
 pub type OnWindowDestroy = fn(Webview, fn());
+
+pub type IsInitialize = fn() -> bool;
+
+pub type GetZoomFactor = fn(Webview) -> f32;
+pub type SetZoomFactor = fn(Webview, f32) -> f32;
 
 pub type JsBindFunction = fn(*mut i8, fn(es: jsExecState) -> jsValue, i32);
 pub type RunJS = fn(Webview, *const i8) -> jsValue;

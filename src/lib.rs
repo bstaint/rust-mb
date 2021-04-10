@@ -8,17 +8,16 @@ pub mod interface;
 #[cfg(test)]
 mod tests {
 
-
     use super::*;
 
     use interface::Type::*;
-
 
     #[test]
     fn CreateWebWindow() {
         MB::Initialize();
         MB::EnableHighDPISupport();
         MB::JsBindFunction("sendData", getJSdata, 0);
+   
 
         let mut mb = MB::new();
         mb.CreateWebWindow(Window::default())

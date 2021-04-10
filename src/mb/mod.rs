@@ -2,6 +2,7 @@
 
 
 pub mod Func;
+pub mod mbAPI;
 pub mod util;
 
 pub mod jsValue;
