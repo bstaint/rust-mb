@@ -11,7 +11,7 @@ mb的rust封装，写的很烂。
 
 1.  把下列代码复制到Cargo.toml
 
-    miniblink = {git = "https://gitee.com/jojonb/rust-mb"}
+    miniblink = {git = "http://gitee.com/jojonb/rust-mb"}
 2.  node.dll在[此处](http://miniblink.net)获取
 
 #### 效果
