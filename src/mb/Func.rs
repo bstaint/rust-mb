@@ -22,7 +22,7 @@ impl MB {
         }
     }
 
-    /**设置窗口标题 */
+    /**设置窗口图标 */
     pub fn SetWindowIcon(&mut self, iconId: i32) -> &mut MB {
         let hwnd = self.GetWindowHandle();
 
