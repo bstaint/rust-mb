@@ -258,6 +258,20 @@ impl MB {
 
         cToRustStr(msg)
     }
+    /**转换成i32  */
+    pub fn jsToInt(es: jsExecState, value: jsValue) -> i32 {
+        let lib = &nodeDll;
+        let jsToInt: Symbol<jsToInt> = unsafe { lib.get(b"jsToInt").unwrap() };
+
+        jsToInt(es, value)
+    }
+    /**转换成f32  */
+    pub fn jsToFloat(es: jsExecState, value: jsValue) -> f32 {
+        let lib = &nodeDll;
+        let jsToFloat: Symbol<jsToFloat> = unsafe { lib.get(b"jsToFloat").unwrap() };
+
+        jsToFloat(es, value)
+    }
 
     pub fn jsString(es: jsExecState, str: &str) -> jsValue {
         let lib = &nodeDll;

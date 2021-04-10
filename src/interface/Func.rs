@@ -43,7 +43,11 @@ pub type GlobalExec = fn(webview: Webview) -> jsExecState;
 
 //js
 pub type jsArg = fn(es: jsExecState, argId: i32) -> jsValue;
+
 pub type jsToString = fn(es: jsExecState, value: jsValue) -> *const i8;
+pub type jsToInt = fn(es: jsExecState, value: jsValue) -> i32;
+pub type jsToFloat = fn(es: jsExecState, value: jsValue) -> f32;
+
 pub type jsString = fn(es: jsExecState, str: *const i8) -> jsValue;
 pub type jsEmptyObject = fn(es: jsExecState) -> jsValue;
 pub type jsGet = fn(es: jsExecState, object: jsValue, prop: *mut i8) -> jsValue;
