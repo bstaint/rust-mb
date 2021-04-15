@@ -39,4 +39,40 @@ impl MB {
 
         self
     }
+
+    pub fn Show(&mut self) -> &mut MB {
+        self.ShowWindow();
+        self.parseFunction();
+
+        self
+    }
+
+    pub fn parseFunction(&mut self) {
+        self.RunJS(
+            r#"Object.keys(window).forEach(key => {
+            if (!key.includes(".")) {
+                return;
+            }
+            let definition;
+            let paths = key.split(".");
+            let length = paths.length;
+            definition = window;
+            for (let i = 0; i < length; i++) {
+                let path = paths[i];
+        
+                if (i >= length - 1) {
+                    definition[path] = window[key];
+
+                }
+        
+                if (!definition[path]) {
+                    definition[path] = {};
+                }
+        
+                definition = definition[path];
+            
+            }
+        })"#,
+        );
+    }
 }

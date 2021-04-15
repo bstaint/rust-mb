@@ -23,6 +23,9 @@ pub type OnDocumentReady = fn(Webview, fn());
 pub type OnLoadingFinish = fn(Webview, fn());
 pub type OnWindowDestroy = fn(Webview, fn());
 
+pub type OnLoadUrlBegin = fn(Webview, LoadUrlBeginCallback, i32);
+pub type OnLoadUrlEnd = fn(Webview, LoadUrlEndCallback, i32);
+
 pub type IsInitialize = fn() -> bool;
 
 pub type GetZoomFactor = fn(Webview) -> f32;
@@ -41,12 +44,20 @@ pub type GetURL = fn(webview: Webview) -> *const i8;
 
 pub type GlobalExec = fn(webview: Webview) -> jsExecState;
 
+//http hook
+pub type NetSetData = fn(Netjob, *const i8, i32);
+pub type NetHookRequest = fn(Netjob);
+
+//callbacks
+pub type LoadUrlEndCallback = fn(Webview, i32, *const i8, Netjob, *const i8, i32);
+pub type LoadUrlBeginCallback = fn(Webview, i32, *const i8, Netjob);
 //js
 pub type jsArg = fn(es: jsExecState, argId: i32) -> jsValue;
 
 pub type jsToString = fn(es: jsExecState, value: jsValue) -> *const i8;
 pub type jsToInt = fn(es: jsExecState, value: jsValue) -> i32;
 pub type jsToFloat = fn(es: jsExecState, value: jsValue) -> f32;
+pub type jsToBoolean = fn(es: jsExecState, value: jsValue) -> bool;
 
 pub type jsString = fn(es: jsExecState, str: *const i8) -> jsValue;
 pub type jsEmptyObject = fn(es: jsExecState) -> jsValue;

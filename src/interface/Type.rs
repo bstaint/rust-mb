@@ -11,6 +11,8 @@ pub struct Window {
 
 pub struct Object;
 
+pub type Netjob = isize;
+
 pub type Webview = isize;
 #[derive(Clone, Copy, Debug)]
 pub struct jsExecState {

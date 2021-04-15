@@ -171,6 +171,25 @@ impl MB {
         self
     }
 
+    /**Url开始加载回调 */
+    pub fn OnLoadUrlBegin(&mut self, callback: LoadUrlBeginCallback, param: i32) -> &mut MB {
+        let lib = &nodeDll;
+        let wkeOnLoadUrlBegin: Symbol<OnLoadUrlBegin> =
+            unsafe { lib.get(b"wkeOnLoadUrlBegin").unwrap() };
+
+        wkeOnLoadUrlBegin(self.webview, callback, param);
+        self
+    }
+
+    /**Url加载完成回调 */
+    pub fn OnLoadUrlEnd(&mut self, callback: LoadUrlEndCallback, param: i32) -> &mut MB {
+        let lib = &nodeDll;
+        let wkeOnLoadUrlEnd: Symbol<OnLoadUrlEnd> = unsafe { lib.get(b"wkeOnLoadUrlEnd").unwrap() };
+
+        wkeOnLoadUrlEnd(self.webview, callback, param);
+        self
+    }
+
     /**窗体销毁回调 */
     pub fn OnWindowDestroy(&mut self, callback: fn()) -> &mut MB {
         let lib = &nodeDll;
@@ -179,6 +198,23 @@ impl MB {
 
         wkeOnWindowDestroy(self.webview, callback);
         self
+    }
+
+    /**设置网络请求数据 */
+    pub fn NetSetData(jobptr: Netjob, buf: *const i8, len: i32) {
+        let lib = &nodeDll;
+        let wkeNetSetData: Symbol<NetSetData> = unsafe { lib.get(b"wkeNetSetData").unwrap() };
+
+        wkeNetSetData(jobptr, buf, len);
+    }
+    
+    /**拦截网络请求 */
+    pub fn NetHookRequest(jobptr: Netjob) {
+        let lib = &nodeDll;
+        let wkeNetHookRequest: Symbol<NetHookRequest> =
+            unsafe { lib.get(b"wkeNetHookRequest").unwrap() };
+
+        wkeNetHookRequest(jobptr);
     }
 
     /**JS绑定方法 */
@@ -271,6 +307,14 @@ impl MB {
         let jsToFloat: Symbol<jsToFloat> = unsafe { lib.get(b"jsToFloat").unwrap() };
 
         jsToFloat(es, value)
+    }
+
+    /**转换成bool  */
+    pub fn jsToBoolean(es: jsExecState, value: jsValue) -> bool {
+        let lib = &nodeDll;
+        let jsToBoolean: Symbol<jsToBoolean> = unsafe { lib.get(b"jsToBoolean").unwrap() };
+
+        jsToBoolean(es, value)
     }
 
     pub fn jsString(es: jsExecState, str: &str) -> jsValue {
