@@ -207,7 +207,7 @@ impl MB {
 
         wkeNetSetData(jobptr, buf, len);
     }
-    
+
     /**拦截网络请求 */
     pub fn NetHookRequest(jobptr: Netjob) {
         let lib = &nodeDll;
@@ -275,6 +275,14 @@ impl MB {
         let wkeGlobalExec: Symbol<GlobalExec> = unsafe { lib.get(b"wkeGlobalExec").unwrap() };
 
         wkeGlobalExec(self.webview)
+    }
+
+    /** 强制js执行垃圾回收 */
+    pub fn GC() {
+        let lib = &nodeDll;
+        let jsGC: Symbol<jsGC> = unsafe { lib.get(b"jsGC").unwrap() };
+
+        jsGC()
     }
 
     /**获取传入参数 */

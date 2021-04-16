@@ -51,6 +51,7 @@ pub type NetHookRequest = fn(Netjob);
 //callbacks
 pub type LoadUrlEndCallback = fn(Webview, i32, *const i8, Netjob, *const i8, i32);
 pub type LoadUrlBeginCallback = fn(Webview, i32, *const i8, Netjob);
+
 //js
 pub type jsArg = fn(es: jsExecState, argId: i32) -> jsValue;
 
@@ -63,3 +64,4 @@ pub type jsString = fn(es: jsExecState, str: *const i8) -> jsValue;
 pub type jsEmptyObject = fn(es: jsExecState) -> jsValue;
 pub type jsGet = fn(es: jsExecState, object: jsValue, prop: *mut i8) -> jsValue;
 pub type jsSet = fn(es: jsExecState, object: jsValue, prop: *mut i8, value: jsValue);
+pub type jsGC = fn();
