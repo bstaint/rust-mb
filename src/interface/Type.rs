@@ -11,7 +11,10 @@ pub struct Window {
 
 pub struct Object;
 
-pub type Netjob = isize;
+#[derive(Clone, Copy, Debug)]
+pub struct Netjob {
+    value: isize,
+}
 
 pub type Webview = isize;
 #[derive(Clone, Copy, Debug)]
