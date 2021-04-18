@@ -60,6 +60,7 @@ pub type jsToInt = fn(es: jsExecState, value: jsValue) -> i32;
 pub type jsToFloat = fn(es: jsExecState, value: jsValue) -> f32;
 pub type jsToBoolean = fn(es: jsExecState, value: jsValue) -> bool;
 
+pub type jsInt = fn(n: i32) -> jsValue;
 pub type jsString = fn(es: jsExecState, str: *const i8) -> jsValue;
 pub type jsEmptyObject = fn(es: jsExecState) -> jsValue;
 pub type jsUndefined = fn() -> jsValue;

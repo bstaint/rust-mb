@@ -325,6 +325,13 @@ impl MB {
         jsToBoolean(es, value)
     }
 
+    pub fn jsInt(n: i32) -> jsValue {
+        let lib = &nodeDll;
+        let jsInt: Symbol<jsInt> = unsafe { lib.get(b"jsInt").unwrap() };
+
+        jsInt(n)
+    }
+
     pub fn jsString(es: jsExecState, str: &str) -> jsValue {
         let lib = &nodeDll;
         let jsString: Symbol<jsString> = unsafe { lib.get(b"jsString").unwrap() };
