@@ -62,6 +62,11 @@ pub type jsToBoolean = fn(es: jsExecState, value: jsValue) -> bool;
 
 pub type jsString = fn(es: jsExecState, str: *const i8) -> jsValue;
 pub type jsEmptyObject = fn(es: jsExecState) -> jsValue;
+pub type jsUndefined = fn() -> jsValue;
+pub type jsNull = fn() -> jsValue;
+pub type jsTrue = fn() -> jsValue;
+pub type jsFalse = fn() -> jsValue;
+
 pub type jsGet = fn(es: jsExecState, object: jsValue, prop: *mut i8) -> jsValue;
 pub type jsSet = fn(es: jsExecState, object: jsValue, prop: *mut i8, value: jsValue);
 pub type jsGC = fn();

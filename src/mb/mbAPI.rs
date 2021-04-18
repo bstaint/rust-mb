@@ -332,6 +332,31 @@ impl MB {
         let str = rustToCStr(str);
         jsString(es, str)
     }
+    pub fn jsUndefined() -> jsValue {
+        let lib = &nodeDll;
+        let jsUndefined: Symbol<jsUndefined> = unsafe { lib.get(b"jsUndefined").unwrap() };
+
+        jsUndefined()
+    }
+    pub fn jsNull() -> jsValue {
+        let lib = &nodeDll;
+        let jsNull: Symbol<jsNull> = unsafe { lib.get(b"jsNull").unwrap() };
+
+        jsNull()
+    }
+
+    pub fn jsTrue() -> jsValue {
+        let lib = &nodeDll;
+        let jsTrue: Symbol<jsTrue> = unsafe { lib.get(b"jsTrue").unwrap() };
+
+        jsTrue()
+    }
+    pub fn jsFalse() -> jsValue {
+        let lib = &nodeDll;
+        let jsFalse: Symbol<jsFalse> = unsafe { lib.get(b"jsFalse").unwrap() };
+
+        jsFalse()
+    }
 
     pub fn jsEmptyObject(es: jsExecState) -> jsValue {
         let lib = &nodeDll;

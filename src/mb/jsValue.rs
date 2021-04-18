@@ -33,11 +33,3 @@ impl jsValue {
         MB::jsSet(es, self.clone(), prop, value);
     }
 }
-
-impl Default for jsValue {
-    fn default() -> Self {
-        let mut mb = MB::GetCurrentMB();
-        let es = mb.GlobalExec();
-        MB::jsString(es, "")
-    }
-}
