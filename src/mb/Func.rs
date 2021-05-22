@@ -10,12 +10,20 @@ use winapi::{
     },
 };
 
-use crate::interface::Type::MB;
+use crate::interface::Type::{MB, Webview};
 
 impl MB {
     /** 获取当前的MB */
     pub fn GetCurrentMB() -> MB {
         let webview = MB::GetWebViewForCurrentContext();
+        MB {
+            webview: webview,
+            url: String::new(),
+        }
+    }
+
+    /** 获取当前的MB */
+    pub fn GetMbByWebview(webview:Webview) ->MB{
         MB {
             webview: webview,
             url: String::new(),
