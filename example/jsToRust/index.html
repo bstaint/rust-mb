@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            margin: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        字符串：<input type="text" id="inputStr"><br><br><button id="sendStr">发送字符串</button>
+    </div>
+    <div>
+        {<br>
+        name: <input type="text" id="name"><br>
+        age : <input type="text" id="age"><br>
+        }<br><br><button id="sendObj">发送对象</button>
+    </div>
+
+    <script>
+        let btnSendStr = document.getElementById("sendStr");
+        let btnSendObj = document.getElementById("sendObj");
+
+        btnSendStr.onclick = () => {
+            let inputStr = document.getElementById("inputStr").value;
+            sendStr(inputStr);
+        }
+
+        btnSendObj.onclick = () => {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            sendObj({ name, age });
+        }
+
+    </script>
+
+</body>
+
+</html>
