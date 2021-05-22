@@ -14,6 +14,7 @@ pub type MoveToCenter = fn(Webview);
 pub type EnableHighDPISupport = fn();
 pub type RunMessageLoop = fn();
 pub type SetWindowTitle = fn(Webview, *mut i8);
+pub type SetDebugConfig=fn(Webview,*mut i8,*mut i8);
 
 pub type LoadUrl = fn(Webview, *mut i8);
 pub type LoadHTML = fn(Webview, *mut i8);
