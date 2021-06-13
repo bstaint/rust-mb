@@ -457,4 +457,8 @@ impl MB {
 
         wkeFireWindowsMessage(self.webview, hWnd, message, wParam, lParam)
     }
+
+    pub fn GetNodeDll() -> &'static Library {
+        &nodeDll
+    }
 }
