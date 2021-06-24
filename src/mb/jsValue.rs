@@ -28,8 +28,18 @@ impl jsValue {
         MB::jsGet(es, self.clone(), prop)
     }
 
-    ///获取对象属性
+    ///设置对象属性
     pub fn setProp(&self, es: jsExecState, prop: &str, value: jsValue) {
         MB::jsSet(es, self.clone(), prop, value);
+    }
+
+    ///获取数组成员
+    pub fn get(&self, es: jsExecState, index: i32) -> jsValue {
+        MB::jsGetAt(es, self.clone(), index)
+    }
+
+    ///设置数组成员
+    pub fn set(&self, es: jsExecState, index: i32, value: jsValue) {
+        MB::jsSetAt(es, self.clone(), index, value);
     }
 }

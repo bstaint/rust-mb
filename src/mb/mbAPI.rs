@@ -31,7 +31,7 @@ impl MB {
             url: String::new(),
         }
     }
-    ///初始化miniblink 
+    ///初始化miniblink
     pub fn Initialize() {
         let lib = &nodeDll;
         let wkeInitialize: Symbol<Initialize> = unsafe { lib.get(b"wkeInitialize").unwrap() };
@@ -39,7 +39,7 @@ impl MB {
         wkeInitialize();
     }
 
-    ///创建一个窗口 
+    ///创建一个窗口
     pub fn CreateWebWindow(&mut self, window: Window) -> &mut MB {
         let lib = &nodeDll;
         let wkeCreateWebWindow: Symbol<CreateWebWindow> =
@@ -56,7 +56,7 @@ impl MB {
         self
     }
 
-    ///显示窗口 
+    ///显示窗口
     pub fn ShowWindow(&mut self) -> &mut MB {
         let lib = &nodeDll;
         let wkeShowWindow: Symbol<ShowWindow> = unsafe { lib.get(b"wkeShowWindow").unwrap() };
@@ -65,7 +65,7 @@ impl MB {
         self
     }
 
-    ///窗口居中 
+    ///窗口居中
     pub fn MoveToCenter(&mut self) -> &mut MB {
         let lib = &nodeDll;
         let wkeMoveToCenter: Symbol<MoveToCenter> = unsafe { lib.get(b"wkeMoveToCenter").unwrap() };
@@ -73,7 +73,7 @@ impl MB {
         self
     }
 
-    ///开启高dpi支持 
+    ///开启高dpi支持
     pub fn EnableHighDPISupport() {
         let lib = &nodeDll;
         let wkeEnableHighDPISupport: Symbol<EnableHighDPISupport> =
@@ -81,7 +81,7 @@ impl MB {
         wkeEnableHighDPISupport();
     }
 
-    ///开启消息循环 
+    ///开启消息循环
     pub fn RunMessageLoop() {
         let lib = &nodeDll;
         let wkeRunMessageLoop: Symbol<RunMessageLoop> =
@@ -89,7 +89,7 @@ impl MB {
         wkeRunMessageLoop();
     }
 
-    ///设置窗口标题 
+    ///设置窗口标题
     pub fn SetWindowTitle(&mut self, title: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeSetWindowTitle: Symbol<SetWindowTitle> =
@@ -99,29 +99,27 @@ impl MB {
         self
     }
 
-    ///# 开启实验性选项 
+    ///# 开启实验性选项
     ///### 开启Nodejs(只支持32位)
     /// debugString:"enableNodejs"
     ///
     /// params:"1"
-    /// 
+    ///
     ///```
     ///let mut mb=MB::new();
     ///mb.SetDebugConfig("enableNodejs", "1");
     ///```
-    pub fn SetDebugConfig(&mut self, debugString: &str,params:&str) -> &mut MB {
+    pub fn SetDebugConfig(&mut self, debugString: &str, params: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeSetDebugConfig: Symbol<SetDebugConfig> =
             unsafe { lib.get(b"wkeSetDebugConfig").unwrap() };
         let c_debug = rustToCStr(debugString);
-        let c_params=rustToCStr(params);
+        let c_params = rustToCStr(params);
         wkeSetDebugConfig(self.webview, c_debug, c_params);
         self
     }
 
-    
-
-    ///加载URL 
+    ///加载URL
     pub fn LoadUrl(&mut self, url: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeLoadURL: Symbol<LoadUrl> = unsafe { lib.get(b"wkeLoadURL").unwrap() };
@@ -132,7 +130,7 @@ impl MB {
         self
     }
 
-    ///加载HTML 
+    ///加载HTML
     pub fn LoadHTML(&mut self, html: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeLoadHTML: Symbol<LoadHTML> = unsafe { lib.get(b"wkeLoadHTML").unwrap() };
@@ -142,7 +140,7 @@ impl MB {
         self
     }
 
-    ///加载HTML文件 
+    ///加载HTML文件
     pub fn LoadFile(&mut self, filename: &str) -> &mut MB {
         let lib = &nodeDll;
         let wkeLoadFile: Symbol<LoadFile> = unsafe { lib.get(b"wkeLoadFile").unwrap() };
@@ -151,21 +149,21 @@ impl MB {
         wkeLoadFile(self.webview, filename);
         self
     }
-    ///是否初始化完成 
+    ///是否初始化完成
     pub fn IsInitialize() -> bool {
         let lib = &nodeDll;
         let wkeIsInitialize: Symbol<IsInitialize> = unsafe { lib.get(b"wkeIsInitialize").unwrap() };
         wkeIsInitialize()
     }
 
-    ///获取缩放系数 
+    ///获取缩放系数
     pub fn GetZoomFactor(&mut self) -> f32 {
         let lib = &nodeDll;
         let wkeGetZoomFactor: Symbol<GetZoomFactor> =
             unsafe { lib.get(b"wkeGetZoomFactor").unwrap() };
         wkeGetZoomFactor(self.webview)
     }
-    ///设置缩放系数 
+    ///设置缩放系数
     pub fn SetZoomFactor(&mut self, zoom: f32) -> f32 {
         let lib = &nodeDll;
         let wkeSetZoomFactor: Symbol<SetZoomFactor> =
@@ -173,7 +171,7 @@ impl MB {
         wkeSetZoomFactor(self.webview, zoom)
     }
 
-    ///dom加载完成回调 
+    ///dom加载完成回调
     pub fn OnDocumentReady(&mut self, callback: fn()) -> &mut MB {
         let lib = &nodeDll;
         let wkeOnDocumentReady: Symbol<OnDocumentReady> =
@@ -183,7 +181,7 @@ impl MB {
         self
     }
 
-    ///网页加载完成回调 
+    ///网页加载完成回调
     pub fn OnLoadingFinish(&mut self, callback: fn()) -> &mut MB {
         let lib = &nodeDll;
         let wkeOnLoadingFinish: Symbol<OnLoadingFinish> =
@@ -193,7 +191,7 @@ impl MB {
         self
     }
 
-    ///Url开始加载回调 
+    ///Url开始加载回调
     pub fn OnLoadUrlBegin(&mut self, callback: LoadUrlBeginCallback, param: i32) -> &mut MB {
         let lib = &nodeDll;
         let wkeOnLoadUrlBegin: Symbol<OnLoadUrlBegin> =
@@ -203,7 +201,7 @@ impl MB {
         self
     }
 
-    ///Url加载完成回调 
+    ///Url加载完成回调
     pub fn OnLoadUrlEnd(&mut self, callback: LoadUrlEndCallback, param: i32) -> &mut MB {
         let lib = &nodeDll;
         let wkeOnLoadUrlEnd: Symbol<OnLoadUrlEnd> = unsafe { lib.get(b"wkeOnLoadUrlEnd").unwrap() };
@@ -212,7 +210,7 @@ impl MB {
         self
     }
 
-    ///窗体销毁回调 
+    ///窗体销毁回调
     pub fn OnWindowDestroy(&mut self, callback: fn()) -> &mut MB {
         let lib = &nodeDll;
         let wkeOnWindowDestroy: Symbol<OnWindowDestroy> =
@@ -222,7 +220,7 @@ impl MB {
         self
     }
 
-    ///设置网络请求数据 
+    ///设置网络请求数据
     pub fn NetSetData(jobptr: Netjob, buf: *const i8, len: i32) {
         let lib = &nodeDll;
         let wkeNetSetData: Symbol<NetSetData> = unsafe { lib.get(b"wkeNetSetData").unwrap() };
@@ -230,7 +228,7 @@ impl MB {
         wkeNetSetData(jobptr, buf, len);
     }
 
-    ///拦截网络请求 
+    ///拦截网络请求
     pub fn NetHookRequest(jobptr: Netjob) {
         let lib = &nodeDll;
         let wkeNetHookRequest: Symbol<NetHookRequest> =
@@ -239,7 +237,7 @@ impl MB {
         wkeNetHookRequest(jobptr);
     }
 
-    ///JS绑定方法 
+    ///JS绑定方法
     pub fn JsBindFunction(msg: &str, callback: fn(es: jsExecState) -> jsValue, args: i32) {
         let lib = &nodeDll;
         let wkeJsBindFunction: Symbol<JsBindFunction> =
@@ -248,7 +246,7 @@ impl MB {
         wkeJsBindFunction(c_msg, callback, args);
     }
 
-    ///执行JS 
+    ///执行JS
     pub fn RunJS(&mut self, script: &str) -> jsValue {
         let lib = &nodeDll;
         let wkeRunJS: Symbol<RunJS> = unsafe { lib.get(b"wkeRunJS").unwrap() };
@@ -256,7 +254,7 @@ impl MB {
         let script = rustToCStr(script);
         wkeRunJS(self.webview, script)
     }
-    /// 打开开发者工具 
+    /// 打开开发者工具
     pub fn ShowDevtools(&mut self, path: &str) {
         let lib = &nodeDll;
         let ShowDevtools: Symbol<ShowDevtools> = unsafe { lib.get(b"wkeShowDevtools").unwrap() };
@@ -264,7 +262,7 @@ impl MB {
         ShowDevtools(self.webview, path as *mut u16, 0, 0);
     }
 
-    /// 获取网页HTML 
+    /// 获取网页HTML
     pub fn GetSource<'a>(&mut self) -> &'a str {
         let lib = &nodeDll;
         let wkeGetSource: Symbol<GetSource> = unsafe { lib.get(b"wkeGetSource").unwrap() };
@@ -273,7 +271,7 @@ impl MB {
         cToRustStr(source)
     }
 
-    /// 获取当前线程 Webview 
+    /// 获取当前线程 Webview
     pub fn GetWebViewForCurrentContext<'a>() -> Webview {
         let lib = &nodeDll;
         let GetWebViewForCurrentContext: Symbol<GetWebViewForCurrentContext> =
@@ -282,7 +280,7 @@ impl MB {
         GetWebViewForCurrentContext()
     }
 
-    /// 获取当前的url 
+    /// 获取当前的url
     pub fn GetURL<'a>(&mut self) -> &'a str {
         let lib = &nodeDll;
         let wkeGetURL: Symbol<GetURL> = unsafe { lib.get(b"wkeGetURL").unwrap() };
@@ -291,7 +289,16 @@ impl MB {
         cToRustStr(url)
     }
 
-    /// 获取当前的MB 
+    /// 获取当前的标题
+    pub fn GetTitle<'a>(&mut self) -> &'a str {
+        let lib = &nodeDll;
+        let wkeGetTitle: Symbol<GetTitle> = unsafe { lib.get(b"wkeGetTitle").unwrap() };
+
+        let title = wkeGetTitle(self.webview);
+        cToRustStr(title)
+    }
+
+    /// 获取当前的MB
     pub fn GlobalExec(&mut self) -> jsExecState {
         let lib = &nodeDll;
         let wkeGlobalExec: Symbol<GlobalExec> = unsafe { lib.get(b"wkeGlobalExec").unwrap() };
@@ -299,7 +306,7 @@ impl MB {
         wkeGlobalExec(self.webview)
     }
 
-    /// 强制js执行垃圾回收 
+    /// 强制js执行垃圾回收
     pub fn GC() {
         let lib = &nodeDll;
         let jsGC: Symbol<jsGC> = unsafe { lib.get(b"jsGC").unwrap() };
@@ -307,7 +314,7 @@ impl MB {
         jsGC()
     }
 
-    ///获取传入参数 
+    ///获取传入参数
     pub fn jsArg(es: jsExecState, agrId: i32) -> jsValue {
         let lib = &nodeDll;
         let jsArg: Symbol<jsArg> = unsafe { lib.get(b"jsArg").unwrap() };
@@ -406,6 +413,33 @@ impl MB {
         let jsSet: Symbol<jsSet> = unsafe { lib.get(b"jsSet").unwrap() };
         let msg = rustToCStr(prop);
         jsSet(es, object, msg, value);
+    }
+
+    pub fn jsEmptyArray(es: jsExecState) -> jsValue {
+        let lib = &nodeDll;
+        let jsEmptyArray: Symbol<jsEmptyArray> = unsafe { lib.get(b"jsEmptyArray").unwrap() };
+
+        jsEmptyArray(es)
+    }
+
+    pub fn jsGetAt(es: jsExecState, object: jsValue, index: i32) -> jsValue {
+        let lib = &nodeDll;
+        let jsGetAt: Symbol<jsGetAt> = unsafe { lib.get(b"jsGetAt").unwrap() };
+
+        jsGetAt(es, object, index)
+    }
+
+    pub fn jsSetAt(es: jsExecState, object: jsValue, index: i32, value: jsValue) {
+        let lib = &nodeDll;
+        let jsSetAt: Symbol<jsSetAt> = unsafe { lib.get(b"jsSetAt").unwrap() };
+        jsSetAt(es, object, index, value);
+    }
+
+    pub fn jsGetGlobal(es: jsExecState, prop: &str) -> jsValue {
+        let lib = &nodeDll;
+        let jsGetGlobal: Symbol<jsGetGlobal> = unsafe { lib.get(b"jsGetGlobal").unwrap() };
+        let prop = rustToCStr(prop);
+        jsGetGlobal(es, prop)
     }
 
     pub fn GetWindowHandle(&self) -> HWND {

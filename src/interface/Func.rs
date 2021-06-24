@@ -14,7 +14,7 @@ pub type MoveToCenter = fn(Webview);
 pub type EnableHighDPISupport = fn();
 pub type RunMessageLoop = fn();
 pub type SetWindowTitle = fn(Webview, *mut i8);
-pub type SetDebugConfig=fn(Webview,*mut i8,*mut i8);
+pub type SetDebugConfig = fn(Webview, *mut i8, *mut i8);
 
 pub type LoadUrl = fn(Webview, *mut i8);
 pub type LoadHTML = fn(Webview, *mut i8);
@@ -42,6 +42,7 @@ pub type ShowDevtools = fn(webview: Webview, path: *const u16, callback: i32, pa
 pub type GetWebViewForCurrentContext = fn() -> Webview;
 pub type GetSource = fn(webview: Webview) -> *const i8;
 pub type GetURL = fn(webview: Webview) -> *const i8;
+pub type GetTitle=fn(webview: Webview)->*const i8;
 
 pub type GlobalExec = fn(webview: Webview) -> jsExecState;
 
@@ -64,11 +65,18 @@ pub type jsToBoolean = fn(es: jsExecState, value: jsValue) -> bool;
 pub type jsInt = fn(n: i32) -> jsValue;
 pub type jsString = fn(es: jsExecState, str: *const i8) -> jsValue;
 pub type jsEmptyObject = fn(es: jsExecState) -> jsValue;
+pub type jsEmptyArray = fn(es: jsExecState) -> jsValue;
+
 pub type jsUndefined = fn() -> jsValue;
 pub type jsNull = fn() -> jsValue;
 pub type jsTrue = fn() -> jsValue;
 pub type jsFalse = fn() -> jsValue;
 
+pub type jsGetAt = fn(es: jsExecState, object: jsValue, index: i32) -> jsValue;
+pub type jsSetAt = fn(es: jsExecState, object: jsValue, index: i32, v: jsValue);
+
 pub type jsGet = fn(es: jsExecState, object: jsValue, prop: *mut i8) -> jsValue;
 pub type jsSet = fn(es: jsExecState, object: jsValue, prop: *mut i8, value: jsValue);
 pub type jsGC = fn();
+
+pub type jsGetGlobal = fn(es: jsExecState, prop: *const i8) -> jsValue;
