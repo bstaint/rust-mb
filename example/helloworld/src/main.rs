@@ -1,10 +1,10 @@
-use miniblink::interface::Type::*;
+use miniblink::mb::*;
 fn main() {
     MB::Initialize();
     MB::EnableHighDPISupport();
 
     let mut mb = MB::new();
-    mb.CreateWebWindow(Window::default())
+    mb.CreateWebWindow(mbWindow::default())
         .LoadFile("./index.html")
         .MoveToCenter()
         .ShowWindow();

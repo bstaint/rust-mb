@@ -1,9 +1,9 @@
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
-use super::util::*;
+use super::{MB, Netjob, Webview, mbWindow as Window, jsExecState, jsValue, util::*};
 
-use crate::interface::Func::*;
-use crate::interface::Type::*;
+use crate::interface::*;
+
 use lazy_static::lazy_static;
 use libloading::{Library, Symbol};
 use winapi::shared::{
@@ -14,13 +14,7 @@ use winapi::shared::{
 use std::fs;
 lazy_static! {
     static ref nodeDll: Library = unsafe {
-        let isExist = fs::metadata("node.dll").is_ok();
-        if isExist {
-            Library::new("./node.dll").unwrap()
-        } else {
-            eprintln!("node.dll不存在,请前往 https://miniblink.net/ 下载");
-            std::process::exit(1);
-        }
+        Library::new("./node.dll").expect("node.dll不存在,请前往 https://miniblink.net/ 下载")
     };
 }
 
@@ -45,7 +39,7 @@ impl MB {
         let wkeCreateWebWindow: Symbol<CreateWebWindow> =
             unsafe { lib.get(b"wkeCreateWebWindow").unwrap() };
         let webview = wkeCreateWebWindow(
-            window.style,
+            window.style as i32,
             window.parent,
             window.x,
             window.y,
@@ -164,11 +158,12 @@ impl MB {
         wkeGetZoomFactor(self.webview)
     }
     ///设置缩放系数
-    pub fn SetZoomFactor(&mut self, zoom: f32) -> f32 {
+    pub fn SetZoomFactor(&mut self, zoom: f32) -> &mut MB {
         let lib = &nodeDll;
         let wkeSetZoomFactor: Symbol<SetZoomFactor> =
             unsafe { lib.get(b"wkeSetZoomFactor").unwrap() };
-        wkeSetZoomFactor(self.webview, zoom)
+        wkeSetZoomFactor(self.webview, zoom);
+        self
     }
 
     ///dom加载完成回调

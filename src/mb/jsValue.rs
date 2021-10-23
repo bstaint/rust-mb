@@ -1,6 +1,8 @@
 #![allow(non_camel_case_types)]
+
+use crate::mb::{MB, jsExecState, jsValue};
 #[warn(unused_parens)]
-use crate::interface::Type::*;
+
 
 impl jsValue {
     ///转换成字符串

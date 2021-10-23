@@ -10,7 +10,10 @@ use winapi::{
     },
 };
 
-use crate::interface::Type::{MB, Webview};
+use crate::mb::{MB, Webview};
+
+
+
 
 impl MB {
     /** 获取当前的MB */
@@ -49,6 +52,7 @@ impl MB {
     }
 
     pub fn Show(&mut self) -> &mut MB {
+        
         self.ShowWindow();
         self.parseFunction();
 

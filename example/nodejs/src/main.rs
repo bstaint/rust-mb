@@ -1,4 +1,4 @@
-use miniblink::interface::Type::*;
+use miniblink::mb::*;
 ///Nodejs只支持32位
 fn main() {
     MB::Initialize();
@@ -6,7 +6,7 @@ fn main() {
 
 
     let mut mb = MB::new();
-    mb.CreateWebWindow(Window::default())
+    mb.CreateWebWindow(mbWindow::default())
         .SetDebugConfig("enableNodejs", "1")
         .LoadFile("./index.html")
         .MoveToCenter()

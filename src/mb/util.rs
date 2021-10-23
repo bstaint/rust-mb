@@ -2,7 +2,7 @@
 
 use std::ffi::{CStr, CString};
 
-use crate::interface::Type::{jsExecState, jsValue};
+
 
 pub fn rustToCStr(str: &str) -> *mut i8 {
     CString::new(str).unwrap().into_raw()

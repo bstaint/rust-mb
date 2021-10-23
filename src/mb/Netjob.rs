@@ -1,6 +1,7 @@
 #![allow(non_camel_case_types)]
 
-use crate::interface::Type::*;
+use crate::mb::{MB, Netjob};
+
 
 impl Netjob {
     pub fn HookRequest(self) {

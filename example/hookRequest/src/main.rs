@@ -1,10 +1,10 @@
-use miniblink::{interface::Type::*, mb::util::cToRustStr};
+use miniblink::{mb::*, mb::util::cToRustStr};
 fn main() {
     MB::Initialize();
     MB::EnableHighDPISupport();
 
     let mut mb = MB::new();
-    mb.CreateWebWindow(Window::default())
+    mb.CreateWebWindow(mbWindow::default())
         .LoadFile("./index.html")
         .OnLoadUrlBegin(OnLoadUrlBeginCallBack, 0)
         .OnLoadUrlEnd(OnLoadUrlEndCallBack, 0)

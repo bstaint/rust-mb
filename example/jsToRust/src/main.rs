@@ -1,4 +1,4 @@
-use miniblink::interface::Type::*;
+use miniblink::mb::*;
 fn main() {
     MB::Initialize();
     MB::EnableHighDPISupport();
@@ -6,7 +6,7 @@ fn main() {
     MB::JsBindFunction("sendObj",sendObj,0);
 
     let mut mb = MB::new();
-    mb.CreateWebWindow(Window::default())
+    mb.CreateWebWindow(mbWindow::default())
         .LoadFile("./index.html")
         .MoveToCenter()
         .ShowWindow();
